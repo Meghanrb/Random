@@ -1,3 +1,5 @@
+### Last updated 5-30-25 ####
+
 ###############################################################################################################################################################################
 ###########################################################
 #########################################################
@@ -108,7 +110,7 @@ squeue -u mrb339 # use your net id
 srun --pty bash
 
 ##then run 
-downloaded_data]$ find /home/mrb339/downloaded_data -mindepth 2 -type f -name "*.fastq.gz" -exec mv {} /home/mrb339/download ## change to your directories
+find /home/mrb339/downloaded_data -mindepth 2 -type f -name "*.fastq.gz" -exec mv {} /home/mrb339/download \; ## change to your directories
 
 #####################################
 ## Then to upload to 10x genomics ##
