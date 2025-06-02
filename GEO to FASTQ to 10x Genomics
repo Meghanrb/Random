@@ -101,9 +101,10 @@ sbatch newfilename.SBATCH
 
 squeue -u mrb339 # use your net id
 
-############################################################################
-### To get the fastq files out of their folders for easier upload to 10x ##
-############################################################################
+####################################################################################
+####### To get the fastq files out of their folders for easier upload to 10x #######
+### This only needs to be done if they are not in a folder marked fastq_files!!! ###
+####################################################################################
 
 # first make sure you are on a computing node!!!
 
