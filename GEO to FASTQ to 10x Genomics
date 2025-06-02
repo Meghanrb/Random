@@ -113,6 +113,33 @@ srun --pty bash
 ##then run 
 find /home/mrb339/downloaded_data -mindepth 2 -type f -name "*.fastq.gz" -exec mv {} /home/mrb339/download \; ## change to your directories
 
+### OR ### 
+### Use the following script ##
+
+#!/bin/bash
+#SBATCH --job-name=move_files.SBATCH ## Change to your SBATCH file name
+#SBATCH --output=z01.%x
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=mrb339@georgetown.edu ## Change to your email
+#SBATCH --nodes=1
+#SBATCH --ntasks=1           # This should be 1, as we'll be using background processes or parallel
+#SBATCH --cpus-per-task=1   
+#SBATCH --time=90:00:00
+#SBATCH --mem=120G
+
+
+# Set variables
+TXG_CLI="/home/mrb339/txg-linux-v3.0.1/txg"
+PROJECT_ID="xAacTk7PTGalUad90dIEElg"
+FASTQ_DIR="/home/mrb339/fastq_files"
+
+# Run the upload command
+$TXG_CLI files upload --project-id $PROJECT_ID $FASTQ_DIR/*.fastq.gz
+
+done
+
+wait
+
 #####################################
 ## Then to upload to 10x genomics ##
 ####################################
