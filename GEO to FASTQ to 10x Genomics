@@ -113,11 +113,24 @@ srun --pty bash
 ##then run 
 find /home/mrb339/downloaded_data -mindepth 2 -type f -name "*.fastq.gz" -exec mv {} /home/mrb339/download \; ## change to your directories
 
+
+
+#####################################
+## Then to upload to 10x genomics ##
+####################################
+### first make sure you are on a computing node!!! ###
+
+srun --pty bash
+
+## then run ##
+
+/home/mrb339/txg-linux-v3.0.1/txg files upload --project-id A5mads37TPeCR8OmcJoEsg /home/mrb339/downloaded_data/*.fastq.gz # change the project ID and change your directories
+
 ### OR ### 
 ### Use the following script ##
 
 #!/bin/bash
-#SBATCH --job-name=move_files.SBATCH ## Change to your SBATCH file name
+#SBATCH --job-name=move.SBATCH ## Change to your SBATCH file name
 #SBATCH --output=z01.%x
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=mrb339@georgetown.edu ## Change to your email
@@ -128,22 +141,13 @@ find /home/mrb339/downloaded_data -mindepth 2 -type f -name "*.fastq.gz" -exec m
 #SBATCH --mem=120G
 
 
-# Set variables
 TXG_CLI="/home/mrb339/txg-linux-v3.0.1/txg"
 PROJECT_ID="xAacTk7PTGalUad90dIEElg"
 FASTQ_DIR="/home/mrb339/fastq_files"
 
-# Run the upload command
-$TXG_CLI files upload --project-id $PROJECT_ID $FASTQ_DIR/*.fastq.gz
-
+for f in "$FASTQ_DIR"/*.fastq.gz; do
+  echo "Uploading $f..."
+  yes | $TXG_CLI files upload --project-id "$PROJECT_ID" "$f"
 done
-
-wait
-
-#####################################
-## Then to upload to 10x genomics ##
-####################################
-
-/home/mrb339/txg-linux-v3.0.1/txg files upload --project-id A5mads37TPeCR8OmcJoEsg /home/mrb339/downloaded_data/*.fastq.gz # change the project ID and change your directories
 
 ###############################################################################################################################################################################
